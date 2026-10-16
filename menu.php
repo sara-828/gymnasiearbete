@@ -8,6 +8,14 @@
 <body>
     <h1>Databasanvändare</h1>
 
+    <p><a href="trip.php">trips</a></p>
+
+    <p><a href="users.php">users</a></p>
+
+    <p><a href="event.php">events</a></p>
+
+    <p><a href="artists.php">artists</a></p>
+
 
 </body>
 </html>

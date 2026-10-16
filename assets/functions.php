@@ -19,7 +19,7 @@ function insertForumpost($username, $message) {
         return false;
     }
 }
-
+/*
 function getForumPosts() {
     $sql = "select * from forum order by time desc";
 
@@ -27,8 +27,16 @@ function getForumPosts() {
     $stmt = $forum->prepare($sql);
     $stmt->execute();
     return $stmt;
-}
+}*/
 
+function getUsers() {
+    $sql = "select * from users";
+
+    global $forum;
+    $stmt = $forum->prepare($sql);
+    $stmt->execute();
+    return $stmt;
+}
 
 function login($username, $password){
   global $forum;
