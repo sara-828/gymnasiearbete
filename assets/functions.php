@@ -19,15 +19,6 @@ function insertForumpost($username, $message) {
         return false;
     }
 }
-/*
-function getForumPosts() {
-    $sql = "select * from forum order by time desc";
-
-    global $forum;
-    $stmt = $forum->prepare($sql);
-    $stmt->execute();
-    return $stmt;
-}*/
 
 function getUsers() {
     $sql = "select * from users";
@@ -65,7 +56,7 @@ function login($username, $password){
 function addUser($felt) {
     global $forum;
 
-    $sql = "INSERT INTO user(username, name, email, password) VALUES (:username,:name,:email,:password)";
+    $sql = "INSERT INTO users(username, name, email, password) VALUES (:username,:name,:email,:password)";
    //  UPDATE `user` SET `username`='[value-1]',`name`='[value-2]',`email`='[value-3]',`password`='[value-4]' WHERE 1
 
     $stmt = $forum->prepare($sql);
@@ -176,9 +167,7 @@ function addTrip (){
         }
         catch(Exception $e){
             return false;
-        }
-            
-
+        }       
 
 }
 
