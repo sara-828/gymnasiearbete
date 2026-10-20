@@ -28,7 +28,7 @@ function getUsers() {
     $stmt->execute();
     return $stmt;
 }
-
+/*
 function login($username, $password){
   global $forum;
 
@@ -52,17 +52,18 @@ function login($username, $password){
       return false;
   }
 }
-
+*/ 
 function addUser($felt) {
     global $forum;
 
-    $sql = "INSERT INTO users(username, name, email, password) VALUES (:username,:name,:email,:password)";
+    $sql = "INSERT INTO users(username, firstname, lastname, email, password) VALUES (:username,:firstname,:lastname,:email,:password)";
    //  UPDATE `user` SET `username`='[value-1]',`name`='[value-2]',`email`='[value-3]',`password`='[value-4]' WHERE 1
 
     $stmt = $forum->prepare($sql);
 
     $stmt->bindValue(':username', $felt['username']);
-    $stmt->bindValue(':name', $felt['name']);
+    $stmt->bindValue(':firstname', $felt['firstname']);
+    $stmt->bindValue(':lastname', $felt['lastname']);
     $stmt->bindValue(':email', $felt['email']);
     $stmt->bindValue(':password', $felt['password']);
 /*
