@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <p><a href="menu.php">Databasanvändare</a></p>
+    <p><a href="login.php">Databasanvändare</a></p>
     
 </body>
 </html>

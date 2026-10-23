@@ -56,6 +56,60 @@ if(isset($_POST['submit'])){
         }
 }
 ?>
+<?php
+//require_once 'assets/functions.php';
+
+if(isset($_POST['spara'])){
+
+    if(isset($_POST['username'])
+        
+        && isset($_POST['firstname'])
+        && isset($_POST['lastname'])
+        && isset($_POST['email'])
+        && isset($_POST['password'])
+        && ($_POST["username"] != "") 
+        && ($_POST["firstname"] != "")
+        && ($_POST["lastname"] != "")
+        && ($_POST["email"] != "")
+        && ($_POST["password"] != "")
+        
+        ){
+        
+        $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ;
+        $firstname = filter_input(INPUT_POST, "firstname", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ;
+        $lastname = filter_input(INPUT_POST, "lastname", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ;
+        $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ;
+        //$password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ;
+
+        $password = $_POST['password'];
+
+          $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+         $data = [
+            'username' => $username,
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'email' => $email,
+            'password' => $hashed_password
+        ];
+
+            if(changeUser($data)){
+                $_SESSION['username']= $username;
+                $_SESSION['firstname']= $firstname;
+                $_SESSION['lastname']= $lastname;
+                $_SESSION['email']= $email;
+                //$_SESSION['password']= $password;
+               // header("Location: profil.php");
+            }
+            else {
+                $error=true;
+            }
+        } else {
+            $error=true;
+        }
+}
+
+?>
 
 
 <!DOCTYPE html>
@@ -92,12 +146,28 @@ if(isset($_POST['submit'])){
         </form>
 
     <?php do { ?>
+    <form  method="POST">
+    <table>
                 <tr>
-                    <td><?php echo $row_Recordset1['username']; ?></td>
-                    <td><?php echo $row_Recordset1['firstname']; ?></td>
-                    <td><?php echo $row_Recordset1['lastname']; ?></td>
+                    <td>Kund ID:</td>
+                    <td><?php echo $row_Recordset1['user_id']; ?></td>
+                    </tr>
+                    <tr>
+                    <td><input class="textFiled" name="username" type="text" id="username" value="<?php echo $row_Recordset1['username']; ?>" ></td>
+                    <td><input class="textFiled" name="firstname" type="text" id="firstname" value="<?php echo $row_Recordset1['firstname']; ?>" ></td>
+
+                     </tr>
+                     <tr>
+                    <td><input class="textFiled" name="lastname" type="text" id="lastname" value="<?php echo $row_Recordset1['lastname']; ?>" ></td>
+                    <td><input class="textFiled" name="email" type="text" id="email" value="<?php echo $row_Recordset1['email']; ?>" ></td>
+                    <td colspan="2"><input type="submit" name="spara" id="spara" value="spara"></td>
                 </tr>
                 <br>
+    </table>
+    </form>
+    <br>
 <?php } while ($row_Recordset1=$records->fetch(PDO::FETCH_ASSOC)); ?>
+
+
 </body>
 </html>

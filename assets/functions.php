@@ -28,11 +28,11 @@ function getUsers() {
     $stmt->execute();
     return $stmt;
 }
-/*
+
 function login($username, $password){
   global $forum;
 
-  $sql = "SELECT * FROM user WHERE username = :username";
+  $sql = "SELECT * FROM users WHERE username = :username";
 
   $stmt = $forum->prepare($sql);
   $stmt->bindValue(':username', $username);
@@ -52,7 +52,7 @@ function login($username, $password){
       return false;
   }
 }
-*/ 
+ 
 function addUser($felt) {
     global $forum;
 
@@ -86,36 +86,24 @@ function addUser($felt) {
 function changeUser($felt) {
     global $forum;
 
-   $sql = "UPDATE `user` 
-            SET name = :name, email = :email, password = :password WHERE username=:username";
+   $sql = "UPDATE `users` 
+            SET firstname = :firstname, lastname = :lastname, email = :email, password = :password WHERE username=:username";
 
     $stmt = $forum->prepare($sql);
 
-    $stmt->bindValue(':name', $felt['name']);
+    $stmt->bindValue(':firstname', $felt['firstname']);
+    $stmt->bindValue(':lastname', $felt['lastname']);
     $stmt->bindValue(':email', $felt['email']);
     $stmt->bindValue(':password', $felt['password']);
     $stmt->bindValue(':username', $_SESSION['username'], PDO::PARAM_STR);
 
         try {
             return $stmt->execute();
-
         }
         catch(Exception $e){
             return false;
         }
             
-}
-
-
-function getForumPostsUser($username) {
-     global $forum;
-
-    $sql = "SELECT * FROM forum WHERE username = :username";
-
-    $stmt = $forum->prepare($sql);
-    $stmt->execute([':username' => $username]);
-    return $stmt;
-
 }
 
 
@@ -130,13 +118,11 @@ function addFavoriteArtist ($felt){
     $stmt->bindValue(':user_id', $felt['user_id']);
         try {
             return $stmt->execute();
-
         }
         catch(Exception $e){
             return false;
         }
             
-
 }
 
 function getFavoriteArtists ($user_id){
@@ -169,15 +155,39 @@ function addTrip (){
         catch(Exception $e){
             return false;
         }       
-
 }
-
 
 function addevent(){
 
 }
-    
-    
-    
-    
+
+function getTrips(){
+     $sql = "select * from trip";
+
+    global $forum;
+    $stmt = $forum->prepare($sql);
+    $stmt->execute();
+    return $stmt;
+}
+
+function getArtists(){
+     $sql = "select * from artists";
+
+    global $forum;
+    $stmt = $forum->prepare($sql);
+    $stmt->execute();
+    return $stmt;
+}  
     ?>
+
+    /*
+function getForumPostsUser($username) {
+     global $forum;
+
+    $sql = "SELECT * FROM forum WHERE username = :username";
+
+    $stmt = $forum->prepare($sql);
+    $stmt->execute([':username' => $username]);
+    return $stmt;
+
+}*/
