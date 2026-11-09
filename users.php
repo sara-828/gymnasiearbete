@@ -62,7 +62,7 @@ if(isset($_POST['submit'])){
 if(isset($_POST['spara'])){
 
     if(isset($_POST['username'])
-        
+       
         && isset($_POST['firstname'])
         && isset($_POST['lastname'])
         && isset($_POST['email'])

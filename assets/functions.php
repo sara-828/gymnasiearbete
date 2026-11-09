@@ -178,6 +178,23 @@ function getArtists(){
     $stmt->execute();
     return $stmt;
 }  
+function addArtist($data){
+    global $forum;
+
+    $sql = "INSERT INTO artists(artistname, genre, image) VALUES (:artistname, :genre, :image)";
+    $stmt = $forum->prepare($sql);
+
+    $stmt->bindValue(':artistname', $data['artistname']);
+    $stmt->bindValue(':genre', $data['genre']);
+    $stmt->bindValue(':image', $data['image']);
+
+    try {
+        return $stmt->execute();
+    }
+    catch(Exception $e){
+        return false;
+    }
+}
     ?>
 
     /*
