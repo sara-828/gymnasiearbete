@@ -16,6 +16,8 @@ $row_Recordset1=$records->fetch(PDO::FETCH_ASSOC);
     <title>Document</title>
 </head>
 <body>
+    <h1>Trips</h1>
+    
      <?php do { ?>
                 <tr>
                     <td><?php echo $row_Recordset1['startdate']; ?></td>

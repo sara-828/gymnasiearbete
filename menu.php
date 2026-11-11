@@ -16,6 +16,8 @@
 
     <p><a href="artists.php">artists</a></p>
 
+    <p><a href="logout.php">logga ut</a></p>
+
 
 </body>
 </html>

@@ -2,23 +2,6 @@
 
 require_once 'config/db.php';
 
-function insertForumpost($username, $message) {
-    
-    $sql = "insert into forum (username, message) values (:username, :msg)";
-
-    global $forum;
-
-    $stmt = $forum->prepare($sql);
-
-    $stmt->bindValue(':username', $username);
-    $stmt->bindValue(':msg', $message);
-
-    if ($stmt->execute()) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 function getUsers() {
     $sql = "select * from users";
@@ -82,20 +65,20 @@ function addUser($felt) {
             
 }
 
-
 function changeUser($felt) {
     global $forum;
 
    $sql = "UPDATE `users` 
-            SET firstname = :firstname, lastname = :lastname, email = :email, password = :password WHERE username=:username";
+            SET username = :username, firstname = :firstname, lastname = :lastname, email = :email, password = :password WHERE user_id=:user_id";
 
     $stmt = $forum->prepare($sql);
 
+    $stmt->bindValue(':username', $felt['username']);
     $stmt->bindValue(':firstname', $felt['firstname']);
     $stmt->bindValue(':lastname', $felt['lastname']);
     $stmt->bindValue(':email', $felt['email']);
     $stmt->bindValue(':password', $felt['password']);
-    $stmt->bindValue(':username', $_SESSION['username'], PDO::PARAM_STR);
+    $stmt->bindValue(':user_id', $felt['user_id'], PDO::PARAM_STR);
 
         try {
             return $stmt->execute();
@@ -104,6 +87,14 @@ function changeUser($felt) {
             return false;
         }
             
+}
+function deleteUser($user_id){
+    global $forum;
+
+    $sql = "DELETE FROM users WHERE user_id = :user_id";
+    $stmt = $forum->prepare($sql);
+    $stmt->bindValue(':user_id', $user_id);
+    return $stmt->execute();
 }
 
 
@@ -195,16 +186,14 @@ function addArtist($data){
         return false;
     }
 }
+function deleteArtist($artist_id){
+    global $forum;
+
+    $sql = "DELETE FROM artists WHERE artist_id = :artist_id";
+    $stmt = $forum->prepare($sql);
+    $stmt->bindValue(':artist_id', $artist_id);
+    return $stmt->execute();
+}
     ?>
 
-    /*
-function getForumPostsUser($username) {
-     global $forum;
-
-    $sql = "SELECT * FROM forum WHERE username = :username";
-
-    $stmt = $forum->prepare($sql);
-    $stmt->execute([':username' => $username]);
-    return $stmt;
-
-}*/
+  
