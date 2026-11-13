@@ -177,6 +177,9 @@ $user_id = filter_input(INPUT_POST, "user_id", FILTER_SANITIZE_FULL_SPECIAL_CHAR
                     <td colspan="2"><input type="submit" name="spara" id="spara" value="spara"></td>
                     <td colspan="2"><input type="submit" name="delete" id="delete" value="delete"></td>
                 </tr>
+                <tr>
+                    <td> Favoritartister:</td>
+                </tr>
                 
     </table>
     </form>

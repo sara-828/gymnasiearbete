@@ -127,7 +127,7 @@ global $forum;
 
 }
 
-function addTrip (){
+function addTrip ($data){
     global $forum;
 
     $sql = "INSERT INTO trip(trip_id, event_id, createdby, startdate, enddate) VALUES (:trip_id, :event_id, :createdby, :startdate, :enddate)";
@@ -135,10 +135,10 @@ function addTrip (){
     $stmt = $forum->prepare($sql);
 
     $stmt->bindValue(':trip_id', $felt['trip_id']);
-    $stmt->bindValue(':event_id', $felt['event_id']);
-    $stmt->bindValue(':createdby', $felt['createdby']);
-    $stmt->bindValue(':startdate', $felt['startdate']);
-    $stmt->bindValue(':enddate', $felt['enddate']);
+    $stmt->bindValue(':event_id', $data['event_id']);
+    $stmt->bindValue(':createdby', $data['createdby']);
+    $stmt->bindValue(':startdate', $data['startdate']);
+    $stmt->bindValue(':enddate', $data['enddate']);
         try {
             return $stmt->execute();
 
@@ -148,10 +148,6 @@ function addTrip (){
         }       
 }
 
-function addevent(){
-
-}
-
 function getTrips(){
      $sql = "select * from trip";
 
@@ -159,6 +155,15 @@ function getTrips(){
     $stmt = $forum->prepare($sql);
     $stmt->execute();
     return $stmt;
+}
+
+function deleteTrip($trip_id){
+    global $forum;
+
+    $sql = "DELETE FROM trip WHERE trip_id = :trip_id";
+    $stmt = $forum->prepare($sql);
+    $stmt->bindValue(':trip_id', $trip_id);
+    return $stmt->execute();
 }
 
 function getArtists(){
@@ -193,6 +198,33 @@ function deleteArtist($artist_id){
     $stmt = $forum->prepare($sql);
     $stmt->bindValue(':artist_id', $artist_id);
     return $stmt->execute();
+}
+
+
+function addevent(){
+    global $forum;
+
+    $sql = "INSERT INTO event(eventname, date, price) VALUES (:eventname, :date, :price)";
+    $stmt = $forum->prepare($sql);
+
+    $stmt->bindValue(':eventname', $data['eventname']);
+    $stmt->bindValue(':date', $data['date']);
+    $stmt->bindValue(':price', $data['price']);
+
+    try {
+        return $stmt->execute();
+    }
+    catch(Exception $e){
+        return false;
+    }
+}
+
+function getEvents(){
+     $sql = "select * from event";
+    global $forum;
+    $stmt = $forum->prepare($sql);
+    $stmt->execute();
+    return $stmt;
 }
     ?>
 

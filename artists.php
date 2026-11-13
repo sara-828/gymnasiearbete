@@ -38,6 +38,7 @@ if(isset($_POST['submit'])){
                 $_SESSION['artistname']= $artistname;
                 $_SESSION['genre']= $genre;
                 $_SESSION['image']= $image;
+                header("Location: " . $_SERVER['PHP_SELF']);
             }
             else {
                 $error=true;
@@ -80,6 +81,7 @@ if(isset($_POST['submit'])){
                 <tr>
                     <input type="hidden" name="artist_id" value="<?php echo $row_Recordset1['artist_id']; ?>">
                     <td><?php echo $row_Recordset1['artistname']; ?></td>
+                    <br>
                     <td><?php echo nl2br($row_Recordset1['genre']); ?></td>
                     
                     <td><img src="uploads/<?php echo htmlspecialchars($row_Recordset1['image']); ?>"
