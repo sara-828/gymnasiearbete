@@ -3,7 +3,8 @@
 require_once 'config/db.php';
 
 
-function getUsers() {
+function getUsers()
+{
     $sql = "select * from users";
 
     global $forum;
@@ -12,35 +13,36 @@ function getUsers() {
     return $stmt;
 }
 
-function login($username, $password){
-  global $forum;
+function login($username, $password)
+{
+    global $forum;
 
-  $sql = "SELECT * FROM users WHERE username = :username";
+    $sql = "SELECT * FROM users WHERE username = :username";
 
-  $stmt = $forum->prepare($sql);
-  $stmt->bindValue(':username', $username);
-  $stmt->execute();
+    $stmt = $forum->prepare($sql);
+    $stmt->bindValue(':username', $username);
+    $stmt->execute();
 
-  if ($stmt->rowCount()>0){
+    if ($stmt->rowCount() > 0) {
 
-   $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  if(password_verify($password, $user['password'])){
-   return true;
-  } else {
-   return false;
-  }
-
-  }else {
-      return false;
-  }
+        if (password_verify($password, $user['password'])) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
- 
-function addUser($felt) {
+
+function addUser($felt)
+{
     global $forum;
 
     $sql = "INSERT INTO users(username, firstname, lastname, email, password) VALUES (:username,:firstname,:lastname,:email,:password)";
-   //  UPDATE `user` SET `username`='[value-1]',`name`='[value-2]',`email`='[value-3]',`password`='[value-4]' WHERE 1
+    //  UPDATE `user` SET `username`='[value-1]',`name`='[value-2]',`email`='[value-3]',`password`='[value-4]' WHERE 1
 
     $stmt = $forum->prepare($sql);
 
@@ -49,26 +51,24 @@ function addUser($felt) {
     $stmt->bindValue(':lastname', $felt['lastname']);
     $stmt->bindValue(':email', $felt['email']);
     $stmt->bindValue(':password', $felt['password']);
-/*
+    /*
     if ($stmt->execute()) {
         return true;
     } else {
         return false;
     }*/
-        try {
-            return $stmt->execute();
-
-        }
-        catch(Exception $e){
-            return false;
-        }
-            
+    try {
+        return $stmt->execute();
+    } catch (Exception $e) {
+        return false;
+    }
 }
 
-function changeUser($felt) {
+function changeUser($felt)
+{
     global $forum;
 
-   $sql = "UPDATE `users` 
+    $sql = "UPDATE `users` 
             SET username = :username, firstname = :firstname, lastname = :lastname, email = :email, password = :password WHERE user_id=:user_id";
 
     $stmt = $forum->prepare($sql);
@@ -80,15 +80,14 @@ function changeUser($felt) {
     $stmt->bindValue(':password', $felt['password']);
     $stmt->bindValue(':user_id', $felt['user_id'], PDO::PARAM_STR);
 
-        try {
-            return $stmt->execute();
-        }
-        catch(Exception $e){
-            return false;
-        }
-            
+    try {
+        return $stmt->execute();
+    } catch (Exception $e) {
+        return false;
+    }
 }
-function deleteUser($user_id){
+function deleteUser($user_id)
+{
     global $forum;
 
     $sql = "DELETE FROM users WHERE user_id = :user_id";
@@ -98,58 +97,59 @@ function deleteUser($user_id){
 }
 
 
-function addFavoriteArtist ($felt){
+function addFavoriteArtist($data)
+{
     global $forum;
 
     $sql = "INSERT INTO favoriteartists(artist_id, user_id) VALUES (:artist_id, :user_id)";
     //INSERT INTO `favoriteartists`(`artist_id`, `user_id`) VALUES ('[value-1]','[value-2]')
     $stmt = $forum->prepare($sql);
 
-    $stmt->bindValue(':artist_id', $felt['artist_id']);
-    $stmt->bindValue(':user_id', $felt['user_id']);
-        try {
-            return $stmt->execute();
-        }
-        catch(Exception $e){
-            return false;
-        }
-            
+    $stmt->bindValue(':artist_id', $data['artist_id']);
+    $stmt->bindValue(':user_id', $data['user_id']);
+    try {
+        return $stmt->execute();
+    } catch (Exception $e) {
+        return false;
+    }
 }
 
-function getFavoriteArtists ($user_id){
-global $forum;
+function getFavoriteArtists($user_id)
+{
+    global $forum;
 
     $sql = "SELECT * FROM favoriteartists WHERE user_id = :user_id";
+
+    //$sql = "SELECT artists.artist_id, artists.artistname FROM favoriteartists INNER JOIN artists ON favoriteartists.artist_id = artists.artist_id WHERE favoriteartists.user_id = :user_id";
 
     $stmt = $forum->prepare($sql);
     $stmt->execute([':user_id' => $user_id]);
     return $stmt;
-
 }
 
-function addTrip ($data){
+function addTrip($data)
+{
     global $forum;
 
     $sql = "INSERT INTO trip(trip_id, event_id, createdby, startdate, enddate) VALUES (:trip_id, :event_id, :createdby, :startdate, :enddate)";
     //INSERT INTO `trip`(`trip_id`, `event_id`, `createdby`, `startdate`, `enddate`) VALUES 
     $stmt = $forum->prepare($sql);
 
-    $stmt->bindValue(':trip_id', $felt['trip_id']);
+    $stmt->bindValue(':trip_id', $data['trip_id']);
     $stmt->bindValue(':event_id', $data['event_id']);
     $stmt->bindValue(':createdby', $data['createdby']);
     $stmt->bindValue(':startdate', $data['startdate']);
     $stmt->bindValue(':enddate', $data['enddate']);
-        try {
-            return $stmt->execute();
-
-        }
-        catch(Exception $e){
-            return false;
-        }       
+    try {
+        return $stmt->execute();
+    } catch (Exception $e) {
+        return false;
+    }
 }
 
-function getTrips(){
-     $sql = "select * from trip";
+function getTrips()
+{
+    $sql = "select * from trip";
 
     global $forum;
     $stmt = $forum->prepare($sql);
@@ -157,7 +157,8 @@ function getTrips(){
     return $stmt;
 }
 
-function deleteTrip($trip_id){
+function deleteTrip($trip_id)
+{
     global $forum;
 
     $sql = "DELETE FROM trip WHERE trip_id = :trip_id";
@@ -166,15 +167,17 @@ function deleteTrip($trip_id){
     return $stmt->execute();
 }
 
-function getArtists(){
-     $sql = "select * from artists";
+function getArtists()
+{
+    $sql = "select * from artists";
 
     global $forum;
     $stmt = $forum->prepare($sql);
     $stmt->execute();
     return $stmt;
-}  
-function addArtist($data){
+}
+function addArtist($data)
+{
     global $forum;
 
     $sql = "INSERT INTO artists(artistname, genre, image) VALUES (:artistname, :genre, :image)";
@@ -186,12 +189,12 @@ function addArtist($data){
 
     try {
         return $stmt->execute();
-    }
-    catch(Exception $e){
+    } catch (Exception $e) {
         return false;
     }
 }
-function deleteArtist($artist_id){
+function deleteArtist($artist_id)
+{
     global $forum;
 
     $sql = "DELETE FROM artists WHERE artist_id = :artist_id";
@@ -201,7 +204,8 @@ function deleteArtist($artist_id){
 }
 
 
-function addevent(){
+function addevent($data)
+{
     global $forum;
 
     $sql = "INSERT INTO event(eventname, date, price) VALUES (:eventname, :date, :price)";
@@ -213,19 +217,16 @@ function addevent(){
 
     try {
         return $stmt->execute();
-    }
-    catch(Exception $e){
+    } catch (Exception $e) {
         return false;
     }
 }
 
-function getEvents(){
-     $sql = "select * from event";
+function getEvents()
+{
+    $sql = "select * from event";
     global $forum;
     $stmt = $forum->prepare($sql);
     $stmt->execute();
     return $stmt;
 }
-    ?>
-
-  
