@@ -77,6 +77,14 @@ if (isset($_POST['delete'])) {
         <input type="submit" id="submit" name="submit">
     </form>
 
+    <table>
+        <tr>
+            <th>startdate</th>
+            <th>enddate</th>
+            <th>createdby</th>
+        </tr>
+    </table>
+
     <h1>Trips</h1>
 
     <?php do { ?>

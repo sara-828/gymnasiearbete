@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
     }
 }
 
-if (isset($_POST['spara'])) {
+if (isset($_POST['save'])) {
 
     if (
         isset($_POST['username'])
@@ -135,15 +135,27 @@ if (isset($_POST['addFavoriteArtist'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
+    <nav>
+        <ul>
+            <li><a href="menu.php">Menu</a></li>
+            <li><a href="users.php">Users</a></li>
+            <li><a href="artists.php">Artists</a></li>
+            <li><a href="events.php">Events</a></li>
+            <li><a href="trips.php">Trips</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
+    </nav>
     <h2>Users</h2>
 
     <?php
     if ($error)
         echo "<p> Kontrollera dina uppgifter</p>";
     ?>
+    <div class="form-container">
     <form method="post" action="">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
@@ -162,10 +174,10 @@ if (isset($_POST['addFavoriteArtist'])) {
         <br>
         <input type="submit" id="submit" name="submit">
     </form>
-
+    </div>
     <table>
         <tr>
-            <td>Kund ID:</td>
+            <td>User ID</td>
             <td>
                 <h3>Username</h3>
             </td>
@@ -189,14 +201,14 @@ if (isset($_POST['addFavoriteArtist'])) {
         <form method="post">
             <table>
                 <tr>
-                    <td>Kund ID: <?php echo $row_Recordset1['user_id']; ?> <input type="hidden" name="user_id" value="<?php echo $row_Recordset1['user_id']; ?>"></td>
+                    <td>User ID: <?php echo $row_Recordset1['user_id']; ?> <input type="hidden" name="user_id" value="<?php echo $row_Recordset1['user_id']; ?>"></td>
 
                     <td><input class="textFiled" name="username" type="text" id="username" value="<?php echo $row_Recordset1['username']; ?>"></td>
                     <td><input class="textFiled" name="firstname" type="text" id="firstname" value="<?php echo $row_Recordset1['firstname']; ?>"></td>
                     <td><input class="textFiled" name="lastname" type="text" id="lastname" value="<?php echo $row_Recordset1['lastname']; ?>"></td>
                     <td><input class="textFiled" name="email" type="text" id="email" value="<?php echo $row_Recordset1['email']; ?>"></td>
                     <td><input class="textFiled" name="password" type="password" id="password"></td>
-                    <td colspan="2"><input type="submit" name="spara" id="spara" value="spara"></td>
+                    <td colspan="2"><input type="submit" name="save" id="save" value="save"></td>
                     <td colspan="2"><input type="submit" name="delete" id="delete" value="delete"></td>
                 </tr>
                 <tr>

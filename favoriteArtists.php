@@ -6,7 +6,7 @@ $records = getArtists();
 if (isset($_GET['user_id'])) {
     $user_id = (int) $_GET['user_id']; // Gör om till heltal för säkerhets skull
 } else {
-    // Om inget ID skickades med kan du skicka tillbaka användaren
+    // Om inget ID skickades med skicka tillbaka användaren
     header("Location: index.php");
     exit;
 }
@@ -45,10 +45,11 @@ if (isset($_POST['add'])) {
 
 
     <?php do { ?>
-        <form method="post" action="">
+        <form method="post" action="favoriteAertists.php?user_id=<?php echo $user_id; ?>">
             <table>
                 <tr>
-                    <input type="hidden" name="artist_id" value="<?php echo $row_Recordset1['artist_id']; ?>">
+                    <td><input type="hidden" name="artist_id" value="<?php echo $row_Recordset1['artist_id']; ?>">
+                    <?php echo($row_Recordset1['artistname']); ?></td>
                     <td><?php echo $row_Recordset1['artistname']; ?></td>
                     <br>
                     <td><?php echo nl2br($row_Recordset1['genre']); ?></td>

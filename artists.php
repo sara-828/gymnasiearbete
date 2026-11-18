@@ -95,9 +95,11 @@ if (isset($_POST['delete'])) {
             <tr>
                 <input type="hidden" name="artist_id" value="<?php echo $row_Recordset1['artist_id']; ?>">
                 <td><?php echo $row_Recordset1['artistname']; ?></td>
-                <br>
+            </tr>
+            <tr>
                 <td><?php echo nl2br($row_Recordset1['genre']); ?></td>
-
+            </tr>
+            <tr>
                 <td><img src="uploads/<?php echo htmlspecialchars($row_Recordset1['image']); ?>"
                         width="100"
                         height="100"

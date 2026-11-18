@@ -230,3 +230,12 @@ function getEvents()
     $stmt->execute();
     return $stmt;
 }
+
+function getEmployees()
+{
+    $sql = "select * from employees";
+    global $forum;
+    $stmt = $forum->prepare($sql);
+    $stmt->execute();
+    return $stmt;
+}
