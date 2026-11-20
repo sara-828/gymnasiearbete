@@ -118,8 +118,8 @@ function getFavoriteArtists($user_id)
 {
     global $forum;
 
-    $sql = "SELECT * FROM favoriteartists WHERE user_id = :user_id";
-
+    //$sql = "SELECT * FROM favoriteartists WHERE user_id = :user_id";
+$sql = "SELECT artists.* FROM favoriteartists INNER JOIN artists ON favoriteartists.artist_id = artists.artist_id WHERE favoriteartists.user_id = :user_id";
     //$sql = "SELECT artists.artist_id, artists.artistname FROM favoriteartists INNER JOIN artists ON favoriteartists.artist_id = artists.artist_id WHERE favoriteartists.user_id = :user_id";
 
     $stmt = $forum->prepare($sql);

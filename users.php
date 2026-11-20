@@ -144,8 +144,8 @@ if (isset($_POST['addFavoriteArtist'])) {
             <li><a href="menu.php">Menu</a></li>
             <li><a href="users.php">Users</a></li>
             <li><a href="artists.php">Artists</a></li>
-            <li><a href="events.php">Events</a></li>
-            <li><a href="trips.php">Trips</a></li>
+            <li><a href="event.php">Events</a></li>
+            <li><a href="trip.php">Trips</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </nav>
@@ -156,76 +156,82 @@ if (isset($_POST['addFavoriteArtist'])) {
         echo "<p> Kontrollera dina uppgifter</p>";
     ?>
     <div class="form-container">
-    <form method="post" action="">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="firstname">Firstname:</label>
-        <input type="text" id="firstname" name="firstname" required>
-        <br>
-        <label for="lastname">Lastname:</label>
-        <input type="text" id="lastname" name="lastname" required>
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <input type="submit" id="submit" name="submit">
-    </form>
-    </div>
-    <table>
-        <tr>
-            <td>User ID</td>
-            <td>
-                <h3>Username</h3>
-            </td>
-            <td>
-                <h3>Firstname</h3>
-            </td>
-            <td>
-                <h3>Lastname</h3>
-            </td>
-            <td>
-                <h3>Email</h3>
-            </td>
-            <td>
-                <h3>Password</h3>
-            </td>
-        </tr>
-        <br>
-    </table>
-
-    <?php do { ?>
-        <form method="post">
-            <table>
-                <tr>
-                    <td>User ID: <?php echo $row_Recordset1['user_id']; ?> <input type="hidden" name="user_id" value="<?php echo $row_Recordset1['user_id']; ?>"></td>
-
-                    <td><input class="textFiled" name="username" type="text" id="username" value="<?php echo $row_Recordset1['username']; ?>"></td>
-                    <td><input class="textFiled" name="firstname" type="text" id="firstname" value="<?php echo $row_Recordset1['firstname']; ?>"></td>
-                    <td><input class="textFiled" name="lastname" type="text" id="lastname" value="<?php echo $row_Recordset1['lastname']; ?>"></td>
-                    <td><input class="textFiled" name="email" type="text" id="email" value="<?php echo $row_Recordset1['email']; ?>"></td>
-                    <td><input class="textFiled" name="password" type="password" id="password"></td>
-                    <td colspan="2"><input type="submit" name="save" id="save" value="save"></td>
-                    <td colspan="2"><input type="submit" name="delete" id="delete" value="delete"></td>
-                </tr>
-                <tr>
-                    <td><a href="favoriteArtists.php?user_id=<?php echo htmlspecialchars($row_Recordset1['user_id']); ?>" class="knapp">
-                            configureFavoriteArtists
-                        </a></td>
-                </tr>
-                <tr>
-                    <td> Favoritartister:</td>
-                </tr>
-
-            </table>
+        <form method="post" action="">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="firstname">Firstname:</label>
+            <input type="text" id="firstname" name="firstname" required>
+            <br>
+            <label for="lastname">Lastname:</label>
+            <input type="text" id="lastname" name="lastname" required>
+            <br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <input type="submit" id="submit" name="submit">
         </form>
+    </div>
 
-    <?php } while ($row_Recordset1 = $records->fetch(PDO::FETCH_ASSOC)); ?>
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Password</th>
+            </tr>
+
+            <?php do { ?>
+                <form method="post">
+
+                    <tr>
+                        <td>User ID: <?php echo $row_Recordset1['user_id']; ?> <input type="hidden" name="user_id" value="<?php echo $row_Recordset1['user_id']; ?>"></td>
+
+                        <td><input class="textFiled" name="username" type="text" id="username" value="<?php echo $row_Recordset1['username']; ?>"></td>
+                        <td><input class="textFiled" name="firstname" type="text" id="firstname" value="<?php echo $row_Recordset1['firstname']; ?>"></td>
+                        <td><input class="textFiled" name="lastname" type="text" id="lastname" value="<?php echo $row_Recordset1['lastname']; ?>"></td>
+                        <td><input class="textFiled" name="email" type="text" id="email" value="<?php echo $row_Recordset1['email']; ?>"></td>
+                        <td><input class="textFiled" name="password" type="password" id="password"></td>
+                        <td colspan="2"><input type="submit" name="save" id="save" value="save"></td>
+                        <td colspan="2"><input type="submit" name="delete" id="delete" value="delete"></td>
+                    </tr>
+                    <tr>
+                        <td><a href="favoriteArtists.php?user_id=<?php echo htmlspecialchars($row_Recordset1['user_id']); ?>" class="knapp">
+                                configureFavoriteArtists
+                            </a></td>
+                    </tr>
+                    <tr>
+                        <td> Favoritartister:</td>
+                        <td>
+                            <?php
+                            $favoriteArtists = getFavoriteArtists($row_Recordset1['user_id']);
+                            if ($favoriteArtists->rowCount() > 0) {
+                                while ($artist = $favoriteArtists->fetch(PDO::FETCH_ASSOC)) {
+                                    echo htmlspecialchars($artist['artistname']) . "<br>";
+                                    echo htmlspecialchars($artist['genre']) . "<br>";
+                                    echo '<img src="uploads/' . htmlspecialchars($artist['image']) . '" width="100" height="100" alt="Artistbild"><br>';
+                                }
+                            } else {
+                                echo "No favorite artists.";
+                            }
+                            ?>
+                        </td>
+                    </tr>
 
 
+                </form>
+
+            <?php } while ($row_Recordset1 = $records->fetch(PDO::FETCH_ASSOC)); ?>
+
+
+        </table>
+    </div>
 </body>
 
 </html>

@@ -67,6 +67,7 @@ if (isset($_POST['delete'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -74,21 +75,31 @@ if (isset($_POST['delete'])) {
     if ($error)
         echo "<p> Kontrollera dina uppgifter</p>";
     ?>
-
-    <H1>Artists</H1>
-
-    <form method="post" action="" enctype="multipart/form-data">
-        <label for="artistname">artistname:</label>
-        <input type="text" id="artistname" name="artistname" required>
-        <br>
-        <label for="genre">genre:</label>
-        <input type="text" id="genre" name="genre" required>
-        <br>
-        <label for="image">image:</label>
-        <input type="file" id="image" name="image" accept="image/*" required>
-        <br>
-        <input type="submit" id="submit" name="submit">
-    </form>
+    <nav>
+        <ul>
+            <li><a href="menu.php">Menu</a></li>
+            <li><a href="users.php">Users</a></li>
+            <li><a href="artists.php">Artists</a></li>
+            <li><a href="event.php">Events</a></li>
+            <li><a href="trip.php">Trips</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
+    </nav>
+    <H2>Artists</H2>
+    <div class="form-container">
+        <form method="post" action="" enctype="multipart/form-data">
+            <label for="artistname">artistname:</label>
+            <input type="text" id="artistname" name="artistname" required>
+            <br>
+            <label for="genre">genre:</label>
+            <input type="text" id="genre" name="genre" required>
+            <br>
+            <label for="image">image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+            <br>
+            <input type="submit" id="submit" name="submit">
+        </form>
+    </div>
 
     <?php do { ?>
         <table>

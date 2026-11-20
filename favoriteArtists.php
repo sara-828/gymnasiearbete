@@ -25,6 +25,7 @@ if (isset($_POST['add'])) {
 
     if (addFavoriteArtist($data)) {
         $meddelamde = "Artist har lagts till i favoriter!";
+        
     } else {
         $meddelamde = "Något gick fel. Försök igen.";
     }
@@ -38,6 +39,7 @@ if (isset($_POST['add'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -45,11 +47,11 @@ if (isset($_POST['add'])) {
 
 
     <?php do { ?>
-        <form method="post" action="favoriteAertists.php?user_id=<?php echo $user_id; ?>">
+        <form method="post" action="favoriteArtists.php?user_id=<?php echo $user_id; ?>">
             <table>
                 <tr>
                     <td><input type="hidden" name="artist_id" value="<?php echo $row_Recordset1['artist_id']; ?>">
-                    <?php echo($row_Recordset1['artistname']); ?></td>
+                        <?php echo ($row_Recordset1['artistname']); ?></td>
                     <td><?php echo $row_Recordset1['artistname']; ?></td>
                     <br>
                     <td><?php echo nl2br($row_Recordset1['genre']); ?></td>

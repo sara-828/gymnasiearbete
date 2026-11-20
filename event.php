@@ -53,22 +53,35 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
-    <form method="post" action="">
-        <label for="eventname">eventname:</label>
-        <input type="text" id="eventname" name="eventname" required>
-        <br>
-        <label for="date">date:</label>
-        <input type="text" id="date" name="date" required>
-        <br>
-        <label for="price">price:</label>
-        <input type="text" id="price" name="price" required>
-        <br>
-        <input type="submit" id="submit" name="submit">
-    </form>
-
+    <nav>
+        <ul>
+            <li><a href="menu.php">Menu</a></li>
+            <li><a href="users.php">Users</a></li>
+            <li><a href="artists.php">Artists</a></li>
+            <li><a href="event.php">Events</a></li>
+            <li><a href="trip.php">Trips</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
+    </nav>
+    <h2>Events</h2>
+    <div class="form-container">
+        <form method="post" action="">
+            <label for="eventname">eventname:</label>
+            <input type="text" id="eventname" name="eventname" required>
+            <br>
+            <label for="date">date:</label>
+            <input type="text" id="date" name="date" required>
+            <br>
+            <label for="price">price:</label>
+            <input type="text" id="price" name="price" required>
+            <br>
+            <input type="submit" id="submit" name="submit">
+        </form>
+    </div>
 
     <?php do { ?>
         <form method="post">
